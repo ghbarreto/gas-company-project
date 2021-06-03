@@ -1,6 +1,6 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const keys = require("./config/keys");
+const express = require('express');
+const mongoose = require('mongoose');
+const keys = require('./config/keys');
 
 // connecting to the database
 mongoose.connect(keys.mongoURI, {
@@ -12,10 +12,13 @@ mongoose.connect(keys.mongoURI, {
 // adding app to use express
 const app = express();
 
-require("./routes/storeRouter")(app);
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+require('./routes/storeRouter')(app);
 
 // initializing the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log("Server is running on port:", PORT);
+  console.log('Server is running on port:', PORT);
 });
